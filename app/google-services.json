@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "458279591748",
+    "firebase_url": "https://una-sirena.firebaseio.com",
+    "project_id": "una-sirena",
+    "storage_bucket": "una-sirena.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458279591748:android:60c62bd5853f1241",
+        "android_client_info": {
+          "package_name": "io.github.biswajee.sirena"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458279591748-arfammflbg7pro2gisvtjnakrml7i401.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHzYUTB6ydlPd5HAw_UlEVHiJkqIxYVQc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

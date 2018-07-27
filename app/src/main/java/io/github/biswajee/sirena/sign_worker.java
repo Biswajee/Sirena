@@ -37,21 +37,19 @@ public class sign_worker extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v,"Authenticating you in. Please wait...",Snackbar.LENGTH_SHORT).setAction("Action",null).show();
-                String email_txt = email.getText().toString();
 
-                if(email_txt == null){
+                if(email.getText().toString().isEmpty()){
                     Snackbar.make(v, "Please Enter your E-mail ID",Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
-                String password_txt = password.getText().toString();
-                if(password_txt == null){
+                if(password.getText().toString().isEmpty()){
                     Snackbar.make(v, "Please enter your password", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
+                Snackbar.make(v,"Authenticating you in. Please wait...",Snackbar.LENGTH_SHORT).setAction("Action",null).show();
 
-                mAuth.signInWithEmailAndPassword(email_txt, password_txt).addOnCompleteListener(sign_worker.this, new OnCompleteListener<AuthResult>() {
+                mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(sign_worker.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {

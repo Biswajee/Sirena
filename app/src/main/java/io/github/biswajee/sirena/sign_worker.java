@@ -73,8 +73,8 @@ public class sign_worker extends AppCompatActivity {
         signup_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent homeIntent = new Intent(sign_worker.this, MainActivity.class);
-                startActivity(homeIntent);
+                Intent registerIntent = new Intent(sign_worker.this, register.class);
+                startActivity(registerIntent);
                 finish();
             }
         });

@@ -1,5 +1,6 @@
 package io.github.biswajee.sirena;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -24,11 +25,12 @@ public class register extends AppCompatActivity {
         final TextView email = (TextView)findViewById(R.id.input_email);
         final TextView password = (TextView)findViewById(R.id.input_password);
         final TextView pass_again = (TextView)findViewById(R.id.input_pass_verify);
+        TextView signin = (TextView)findViewById(R.id.link_signin);
 
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(password.getText().equals(pass_again.getText())!= true){
+                if(password.getText().toString().equals(pass_again.getText().toString())!= true){
                     Snackbar.make(v, "Passwords do not match !",Snackbar.LENGTH_SHORT).show();
                     return;
                 }
@@ -43,10 +45,19 @@ public class register extends AppCompatActivity {
                     return;
                 }
 
-                
+
 
             }
         });
+
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent signInIntent = new Intent(register.this, sign_worker.class);
+                startActivity(signInIntent);
+            }
+        });
+
 
     }
 }

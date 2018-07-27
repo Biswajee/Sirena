@@ -31,13 +31,27 @@ public class sign_worker extends AppCompatActivity {
         setContentView(R.layout.sign_screen);
         mAuth = FirebaseAuth.getInstance();
         Button login_button = (Button)findViewById(R.id.btn_login);
+        TextView signup_text = (TextView)findViewById(R.id.link_signup);
         final TextView email = (TextView)findViewById(R.id.input_email);
         final TextView password = (TextView)findViewById(R.id.input_password);
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Snackbar.make(v,"Authenticating you in. Please wait...",Snackbar.LENGTH_SHORT).setAction("Action",null).show();
-                mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(sign_worker.this, new OnCompleteListener<AuthResult>() {
+                String email_txt = email.getText().toString();
+
+                if(email_txt == null){
+                    Snackbar.make(v, "Please Enter your E-mail ID",Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String password_txt = password.getText().toString();
+                if(password_txt == null){
+                    Snackbar.make(v, "Please enter your password", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+
+                mAuth.signInWithEmailAndPassword(email_txt, password_txt).addOnCompleteListener(sign_worker.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -57,7 +71,14 @@ public class sign_worker extends AppCompatActivity {
                 });
             }
         });
+
+        signup_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent homeIntent = new Intent(sign_worker.this, MainActivity.class);
+                startActivity(homeIntent);
+                finish();
+            }
+        });
     }
-
-
 }

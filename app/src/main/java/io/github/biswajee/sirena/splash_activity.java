@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 
 /**
  * Created by Biswajit Roy on 27-07-2018.
@@ -18,6 +19,8 @@ public class splash_activity extends AppCompatActivity {
         setContentView(R.layout.splash);
         //getSupportActionBar().setDisplayShowTitleEnabled(false);
         //getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

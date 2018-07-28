@@ -12,6 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -45,7 +49,8 @@ public class MainActivity extends AppCompatActivity
         sender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ImageView msg_sent = (ImageView)findViewById(R.id.sent_gif);
+                Glide.with(MainActivity.this).load(R.drawable.sent).into(msg_sent);
             }
         });
     }

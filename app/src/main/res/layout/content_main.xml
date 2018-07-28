@@ -26,11 +26,11 @@
             android:paddingTop="56dp">
 
             <ImageView
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="24dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="5dp"
                 android:src="@drawable/logo" />
 
             <android.support.design.widget.TextInputLayout
@@ -49,11 +49,15 @@
 
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/post"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="5dp"
+                android:clickable="true"
+                app:elevation="6dp"
+                app:fabSize="normal"
+                app:backgroundTint="@color/orange"
                 android:layout_gravity="top|end"
-                android:layout_margin="@dimen/fab_margin"
-                app:srcCompat="@android:drawable/ic_menu_send">
+                app:srcCompat="@drawable/send">
 
             </android.support.design.widget.FloatingActionButton>
         </LinearLayout>

@@ -16,6 +16,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,8 +51,13 @@ public class MainActivity extends AppCompatActivity
         sender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 ImageView msg_sent = (ImageView)findViewById(R.id.sent_gif);
                 Glide.with(MainActivity.this).load(R.drawable.sent).into(msg_sent);
+                */
+                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference mConditionRef = mRootRef.child("condition");
+
             }
         });
     }

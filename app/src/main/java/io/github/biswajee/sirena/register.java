@@ -1,8 +1,10 @@
 package io.github.biswajee.sirena;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,6 +17,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.time.Instant;
 
 /**
  * Created by Biswajit Roy on 28-07-2018.
@@ -53,9 +59,15 @@ public class register extends AppCompatActivity {
 
                 mAuth = FirebaseAuth.getInstance();
                 mAuth.createUserWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(register.this, new OnCompleteListener<AuthResult>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+                            DatabaseReference mChildRef = mRootRef.child("user-info").push();
+                            mChildRef.child("email").setValue(email.getText().toString());
+                            mChildRef.child("name").setValue(name.getText().toString());
+                            mChildRef.child("enroll_dt").setValue(Instant.now());
                             Toast.makeText(register.this,"Successfully Registered",Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent homeIntent = new Intent(register.this, MainActivity.class);

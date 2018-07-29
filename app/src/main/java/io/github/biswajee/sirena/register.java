@@ -29,7 +29,7 @@ import java.util.Date;
 
 public class register extends AppCompatActivity {
     FirebaseAuth mAuth;
-    String uid = "unknown-user";
+    static String uid = "unknown-user";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

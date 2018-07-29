@@ -25,6 +25,7 @@ import org.w3c.dom.Text;
 
 public class sign_worker extends AppCompatActivity {
     FirebaseAuth mAuth;
+    static String uid = "unknown-user";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ public class sign_worker extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("LOGIN STATUS:", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             Intent homeIntent = new Intent(sign_worker.this, MainActivity.class);
                             startActivity(homeIntent);
                             finish();

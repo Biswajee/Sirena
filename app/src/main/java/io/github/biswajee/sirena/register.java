@@ -44,7 +44,7 @@ public class register extends AppCompatActivity {
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                final String email_content = email.getText().toString();
+                final String sender_email = email.getText().toString();
                 if(password.getText().toString().equals(pass_again.getText().toString())!= true){
                     Snackbar.make(v, "Passwords do not match !",Snackbar.LENGTH_SHORT).show();
                     return;
@@ -68,7 +68,7 @@ public class register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Date currentTime = Calendar.getInstance().getTime();
-                            session.setusename(email_content);
+                            session.setusename(sender_email);
                             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                             DatabaseReference mChildRef = mRootRef.child("user-info").push();
                             mChildRef.child("email").setValue(email.getText().toString());

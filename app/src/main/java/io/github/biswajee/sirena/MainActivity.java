@@ -31,10 +31,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        final register reg = new register();
         final EditText post_data = (EditText)findViewById(R.id.input_post);
+                
+
+        // ACCESS LOGGED IN USER'S ID (FIREBASE)
+        final register reg = new register();
 
 
+        //BOTTOM RIGHT FLOATING BUTTON ACTION
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +48,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -52,6 +58,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        //CODES FOR SEND BUTTON ACTION BEGINS
 
         FloatingActionButton sender = (FloatingActionButton)findViewById(R.id.post);
         sender.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +89,10 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
+        // UPLOAD PROFILE PICTURE MENU ACTION
+
+
     }
 
 

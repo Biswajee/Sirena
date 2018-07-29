@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "458279591748-oo3ath30uaukk6lstf8pjisisi2i6bm8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.biswajee.sirena",
+            "certificate_hash": "648156192496778da035a885fd261276f8ce646d"
+          }
+        },
+        {
           "client_id": "458279591748-arfammflbg7pro2gisvtjnakrml7i401.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458279591748-arfammflbg7pro2gisvtjnakrml7i401.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

@@ -29,6 +29,7 @@ import java.util.Date;
 
 public class register extends AppCompatActivity {
     FirebaseAuth mAuth;
+
     static String uid = "unknown-user";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class register extends AppCompatActivity {
         final TextView password = (TextView)findViewById(R.id.input_password);
         final TextView pass_again = (TextView)findViewById(R.id.input_pass_verify);
         TextView signin = (TextView)findViewById(R.id.link_signin);
+
 
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override

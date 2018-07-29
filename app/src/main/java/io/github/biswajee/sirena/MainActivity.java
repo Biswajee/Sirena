@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,6 +32,7 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private FirebaseAnalytics mFirebaseAnalytics;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity
         // ACCESS LOGGED IN USER'S ID (FIREBASE)
         final register reg = new register();
 
+        //Firebase Analytics
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         //BOTTOM RIGHT FLOATING BUTTON ACTION
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -51,6 +55,11 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Hello There !", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Float Action Button ");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         });
 
@@ -140,7 +149,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.menu_profile_pic) {
             // Handle the Update profile pic action
-            Intent intent = new Intent();
+            Intent intent = new Intent(MainActivity.this, );
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);

@@ -20,7 +20,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.time.Instant;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Biswajit Roy on 28-07-2018.
@@ -63,11 +64,12 @@ public class register extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
+                            Date currentTime = Calendar.getInstance().getTime();
                             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                             DatabaseReference mChildRef = mRootRef.child("user-info").push();
                             mChildRef.child("email").setValue(email.getText().toString());
                             mChildRef.child("name").setValue(name.getText().toString());
-                            mChildRef.child("enroll_dt").setValue(Instant.now());
+                            mChildRef.child("enroll_dt").setValue(currentTime.toString());
                             Toast.makeText(register.this,"Successfully Registered",Toast.LENGTH_SHORT).show();
                             FirebaseUser user = mAuth.getCurrentUser();
                             Intent homeIntent = new Intent(register.this, MainActivity.class);

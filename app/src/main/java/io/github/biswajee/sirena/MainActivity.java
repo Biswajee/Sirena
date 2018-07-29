@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity
                     post_id.child("post").setValue(post_data.getText().toString());
                     post_id.child("sender").setValue(reg.uid);
                     post_id.child("post_date").setValue(Calendar.getInstance().getTime().toString());
+                    post_data.setText("");
                     Snackbar.make(v, "Your post is published now !", Snackbar.LENGTH_SHORT).show();
                     return;
                 } else {

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -19,15 +20,21 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
+
+        final EditText post_data = (EditText)findViewById(R.id.input_post);
+        session = new Session(getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +63,10 @@ public class MainActivity extends AppCompatActivity
                 Glide.with(MainActivity.this).load(R.drawable.sent).into(msg_sent);
                 */
                 DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference mConditionRef = mRootRef.child("condition");
+                DatabaseReference post_id = mRootRef.child("posts").push();
+                post_id.child("post").setValue(post_data.getText().toString());
+                post_id.child("sender").setValue(session.getusename());
+                post_id.child("post_date").setValue(Calendar.getInstance().getTime().toString());
 
             }
         });

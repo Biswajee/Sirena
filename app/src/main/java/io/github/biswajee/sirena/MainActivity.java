@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-
+        final register reg = new register();
         final EditText post_data = (EditText)findViewById(R.id.input_post);
         session = new Session(getApplicationContext());
 
@@ -62,10 +62,11 @@ public class MainActivity extends AppCompatActivity
                 ImageView msg_sent = (ImageView)findViewById(R.id.sent_gif);
                 Glide.with(MainActivity.this).load(R.drawable.sent).into(msg_sent);
                 */
+
                 DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference post_id = mRootRef.child("posts").push();
                 post_id.child("post").setValue(post_data.getText().toString());
-                post_id.child("sender").setValue(session.getusename());
+                post_id.child("sender").setValue(reg.uid);
                 post_id.child("post_date").setValue(Calendar.getInstance().getTime().toString());
 
             }

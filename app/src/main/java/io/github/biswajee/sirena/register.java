@@ -29,7 +29,7 @@ import java.util.Date;
 
 public class register extends AppCompatActivity {
     FirebaseAuth mAuth;
-    private Session session;
+    String uid = "unknown-user";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +68,7 @@ public class register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Date currentTime = Calendar.getInstance().getTime();
-                            session.setusename(sender_email);
+                            uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                             DatabaseReference mChildRef = mRootRef.child("user-info").push();
                             mChildRef.child("email").setValue(email.getText().toString());

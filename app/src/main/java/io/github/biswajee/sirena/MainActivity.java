@@ -28,19 +28,19 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAnalytics mFirebaseAnalytics;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        final EditText post_data = (EditText)findViewById(R.id.input_post);
-        MenuItem profile_pic = (MenuItem)findViewById(R.id.menu_profile_pic);
+        final EditText post_data = (EditText) findViewById(R.id.input_post);
+        MenuItem profile_pic = (MenuItem) findViewById(R.id.menu_profile_pic);
 
         // ACCESS LOGGED IN USER'S ID (FIREBASE)
         final register reg = new register();
@@ -56,13 +56,12 @@ public class MainActivity extends AppCompatActivity
                 Snackbar.make(view, "Hello There !", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Float Action Button ");
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "Float Action Button Mail ");
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Mail Button");
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "image");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             }
         });
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity
 
         //CODES FOR SEND BUTTON ACTION BEGINS
 
-        FloatingActionButton sender = (FloatingActionButton)findViewById(R.id.post);
+        FloatingActionButton sender = (FloatingActionButton) findViewById(R.id.post);
         sender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,20 +84,18 @@ public class MainActivity extends AppCompatActivity
                 ImageView msg_sent = (ImageView)findViewById(R.id.sent_gif);
                 Glide.with(MainActivity.this).load(R.drawable.sent).into(msg_sent);
                 */
-                if(post_data.getText().toString().isEmpty()){
-                    Snackbar.make(v,"Nothing to post ! Please write something", Snackbar.LENGTH_SHORT).show();
+                if (post_data.getText().toString().isEmpty()) {
+                    Snackbar.make(v, "Nothing to post ! Please write something", Snackbar.LENGTH_SHORT).show();
                     return;
-                }
-                else if(!post_data.getText().toString().isEmpty()){
+                } else if (!post_data.getText().toString().isEmpty()) {
                     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                     DatabaseReference post_id = mRootRef.child("posts").push();
                     post_id.child("post").setValue(post_data.getText().toString());
                     post_id.child("sender").setValue(reg.uid);
                     post_id.child("post_date").setValue(Calendar.getInstance().getTime().toString());
-                    Snackbar.make(v,"Your post is published now !", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Your post is published now !", Snackbar.LENGTH_SHORT).show();
                     return;
-                }
-                else {
+                } else {
                     Snackbar.make(v, "There is some connectivity issue. Verify internet connection.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
@@ -149,30 +146,34 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.menu_profile_pic) {
             // Handle the Update profile pic action
-            Intent intent = new Intent(MainActivity.this, );
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
-            Log.w("STATUS INTENT: ",intent.getData().toString());
-            if(imageUri != null){
-                StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-                storageRef.putFile(imageUri);
+            Intent intent = getIntent();
+            String action = intent.getAction();
+            String type = intent.getType();
+
+            if (Intent.ACTION_SEND.equals(action) && type != null) {
+                if (type.startsWith("image/")) {
+                    Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                    if (imageUri != null) {
+                        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+                        storageRef.putFile(imageUri);
+                    }
+                }
             }
         } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+                } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+                } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+                } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+                } else if (id == R.id.nav_send) {
 
+                }
+
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
-
-}

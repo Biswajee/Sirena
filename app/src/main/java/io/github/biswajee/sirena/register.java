@@ -50,14 +50,17 @@ public class register extends AppCompatActivity {
                     return;
                 }
 
-                if(name.getText().toString().isEmpty()){
+                else if(name.getText().toString().isEmpty()){
                     Snackbar.make(v,"Please enter your full name", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(email.getText().toString().isEmpty()){
+                else if(email.getText().toString().isEmpty()){
                     Snackbar.make(v,"Please enter your E-mail ID", Snackbar.LENGTH_SHORT).show();
                     return;
+                }
+                else{
+                    Snackbar.make(v,"Please wait. Authenticating...", Snackbar.LENGTH_SHORT).show();
                 }
 
                 mAuth = FirebaseAuth.getInstance();

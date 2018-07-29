@@ -25,7 +25,6 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity
         //setSupportActionBar(toolbar);
         final register reg = new register();
         final EditText post_data = (EditText)findViewById(R.id.input_post);
-        session = new Session(getApplicationContext());
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -62,13 +61,20 @@ public class MainActivity extends AppCompatActivity
                 ImageView msg_sent = (ImageView)findViewById(R.id.sent_gif);
                 Glide.with(MainActivity.this).load(R.drawable.sent).into(msg_sent);
                 */
-
-                DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference post_id = mRootRef.child("posts").push();
-                post_id.child("post").setValue(post_data.getText().toString());
-                post_id.child("sender").setValue(reg.uid);
-                post_id.child("post_date").setValue(Calendar.getInstance().getTime().toString());
-
+                if(post_data.getText().toString().isEmpty()){
+                    Snackbar.make(v,"Nothing to post ! Please write something", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+                else {
+                    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+                    DatabaseReference post_id = mRootRef.child("posts").push();
+                    post_id.child("post").setValue(post_data.getText().toString());
+                    post_id.child("sender").setValue(reg.uid);
+                    post_id.child("post_date").setValue(Calendar.getInstance().getTime().toString());
+                    Snackbar.make(v,"Your post is published now !", Snackbar.LENGTH_SHORT).show();
+                }
+                Snackbar.make(v, "There is some connectivity issue. Verify internet connection.",Snackbar.LENGTH_SHORT).show();
+                return;
             }
         });
     }

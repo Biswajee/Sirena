@@ -148,20 +148,10 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.menu_profile_pic) {
             // Handle the Update profile pic action
             Intent intent = getIntent();
-            String action = intent.getAction();
-            String type = intent.getType();
-            Toast.makeText(getApplicationContext(), "You Clicked Upload !", Toast.LENGTH_SHORT).show();
-            if (Intent.ACTION_SEND.equals(action) && type != null) {
-                if (type.startsWith("image/")) {
-                    Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
-                    Toast.makeText(getApplicationContext(), "Got link: " + imageUri.toString(), Toast.LENGTH_SHORT).show();
-                    if (imageUri != null) {
-                        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
-                        storageRef.putFile(imageUri);
-                        Toast.makeText(getApplicationContext(), "Firebase upload done !", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            onActivityResult(intent);
         } else if (id == R.id.nav_gallery) {
 
                 } else if (id == R.id.nav_slideshow) {
@@ -178,5 +168,15 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
             return true;
         }
+    public void onActivityResult(Intent data)
+    {
+        Uri imageUri = (Uri) data.getParcelableExtra(Intent.EXTRA_STREAM);
+        if (imageUri != null) {
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+            storageRef.putFile(imageUri);
+            Toast.makeText(getApplicationContext(), "Firebase upload done !", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     }

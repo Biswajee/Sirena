@@ -3,7 +3,6 @@ package io.github.biswajee.sirena;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -20,16 +19,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -172,7 +169,9 @@ public class MainActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (requestCode == PICK_IMAGE) {
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference("images");
+            Random r = new Random();
+            int a = r.nextInt((100000-100)+1)+10;
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference(Integer.toString(a));
             Uri imageUri = data.getData();   //Intent.EXTRA_STREAM
             storageRef.putFile(imageUri);
             Toast.makeText(getApplicationContext(),"File Successfully Uploaded !",Toast.LENGTH_SHORT).show();

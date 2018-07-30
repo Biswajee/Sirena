@@ -17,8 +17,6 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.model.GlideUrl;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,6 +29,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAnalytics mFirebaseAnalytics;
+    private String MENU_IMAGE = "profile_pic";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,6 +176,8 @@ public class MainActivity extends AppCompatActivity
             StorageReference storageRef = FirebaseStorage.getInstance().getReference(Integer.toString(a));
             Uri imageUri = data.getData();   //Intent.EXTRA_STREAM
             storageRef.putFile(imageUri);
+
+
             Toast.makeText(getApplicationContext(),"File Successfully Uploaded !",Toast.LENGTH_SHORT).show();
             }
             else{

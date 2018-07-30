@@ -37,10 +37,11 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar.hideOverflowMenu();
+        //setSupportActionBar(toolbar);
         final EditText post_data = (EditText) findViewById(R.id.input_post);
         MenuItem profile_pic = (MenuItem) findViewById(R.id.menu_profile_pic);
-
+        post_data.clearFocus();
         // ACCESS LOGGED IN USER'S ID (FIREBASE)
         final register reg = new register();
 
@@ -93,6 +94,8 @@ public class MainActivity extends AppCompatActivity
                     post_id.child("sender").setValue(reg.uid);
                     post_id.child("post_date").setValue(Calendar.getInstance().getTime().toString());
                     post_data.setText("");
+                    post_data.clearFocus();
+
                     Snackbar.make(v, "Your post is published now !", Snackbar.LENGTH_SHORT).show();
                     return;
                 } else {

@@ -172,8 +172,10 @@ public class MainActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (requestCode == PICK_IMAGE) {
+            Toast.makeText(getApplicationContext(),data.toString(),Toast.LENGTH_LONG).show();
             StorageReference storageRef = FirebaseStorage.getInstance().getReference("images");
-            Uri imageUri = data.getParcelableExtra(Intent.EXTRA_STREAM);   //Intent.EXTRA_STREAM
+            Uri imageUri = data.getData();   //Intent.EXTRA_STREAM
+            Toast.makeText(getApplicationContext(),imageUri.toString(),Toast.LENGTH_LONG).show();
             storageRef.putFile(imageUri);
             }
         super.onActivityResult(requestCode, resultCode, data);

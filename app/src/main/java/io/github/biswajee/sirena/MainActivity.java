@@ -3,9 +3,9 @@ package io.github.biswajee.sirena;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,16 +16,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 
@@ -147,11 +149,10 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.menu_profile_pic) {
             // Handle the Update profile pic action
-            Intent intent = getIntent();
+            Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-            onActivityResult(intent);
         } else if (id == R.id.nav_gallery) {
 
                 } else if (id == R.id.nav_slideshow) {
@@ -168,15 +169,14 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
             return true;
         }
-    public void onActivityResult(Intent data)
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        Uri imageUri = (Uri) data.getParcelableExtra(Intent.EXTRA_STREAM);
-        if (imageUri != null) {
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        if (requestCode == PICK_IMAGE) {
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference("images");
+            Uri imageUri = data.getParcelableExtra(Intent.EXTRA_STREAM);   //Intent.EXTRA_STREAM
             storageRef.putFile(imageUri);
-            Toast.makeText(getApplicationContext(), "Firebase upload done !", Toast.LENGTH_SHORT).show();
-        }
-
+            }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
     }
 
-    }

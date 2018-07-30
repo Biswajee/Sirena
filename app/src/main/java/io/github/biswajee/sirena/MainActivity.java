@@ -150,13 +150,15 @@ public class MainActivity extends AppCompatActivity
             Intent intent = getIntent();
             String action = intent.getAction();
             String type = intent.getType();
-
+            Toast.makeText(getApplicationContext(), "You Clicked Upload !", Toast.LENGTH_SHORT).show();
             if (Intent.ACTION_SEND.equals(action) && type != null) {
                 if (type.startsWith("image/")) {
                     Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                    Toast.makeText(getApplicationContext(), "Got link: " + imageUri.toString(), Toast.LENGTH_SHORT).show();
                     if (imageUri != null) {
                         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
                         storageRef.putFile(imageUri);
+                        Toast.makeText(getApplicationContext(), "Firebase upload done !", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

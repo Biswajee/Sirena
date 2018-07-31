@@ -80,6 +80,7 @@ public class register extends AppCompatActivity {
                             loginInf.putString("email",email.getText().toString());
                             loginInf.putString("password", password.getText().toString());
                             loginInf.putString("user", name.getText().toString());
+                            loginInf.commit();
 
                             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();

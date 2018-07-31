@@ -54,8 +54,8 @@ public class MainActivity extends AppCompatActivity
         String user_name = loginData.getString("user","Alia Bhatt");
 
         //Test Codes...
-        Toast.makeText(getApplicationContext(),user_mail,Toast.LENGTH_SHORT).show();
-        Toast.makeText(getApplicationContext(),user_name,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),user_mail,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),user_name,Toast.LENGTH_SHORT).show();
 
 
         //Set user values into Side nav...
@@ -201,16 +201,28 @@ public class MainActivity extends AppCompatActivity
             int a = r.nextInt((100000-100)+1)+10;
 
             StorageReference storageRef = FirebaseStorage.getInstance().getReference(Integer.toString(a));
+
+            //Add image file name to Shared Pref...
+            SharedPreferences avatarData = getSharedPreferences("Avatar", MODE_PRIVATE);
+            SharedPreferences.Editor avatarInf= avatarData.edit();
+            avatarInf.putString("picture",Integer.toString(a));
+            avatarInf.commit();
+
             Uri imageUri = data.getData();   //Intent.EXTRA_STREAM
-                storageRef.putFile(imageUri);
-                Toast.makeText(getApplicationContext(), "File Successfully Uploaded !", Toast.LENGTH_SHORT).show();
+            storageRef.putFile(imageUri);
+            Toast.makeText(getApplicationContext(), "Profile picture successfully uploaded", Toast.LENGTH_SHORT).show();
+
+            //Download Avatar image from Firebase Storage to ImageView...
+            
+
+
             }else {
-                Toast.makeText(getApplicationContext(),"No file was selected !",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"No file was selected",Toast.LENGTH_SHORT).show();
                 return;
             }
             }
             else{
-            Toast.makeText(getApplicationContext(),"File Upload Failed !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"File Upload Failed",Toast.LENGTH_SHORT).show();
             return;
         }
         super.onActivityResult(requestCode, resultCode, data);

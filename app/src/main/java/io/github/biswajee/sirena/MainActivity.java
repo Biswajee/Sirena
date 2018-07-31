@@ -52,9 +52,14 @@ public class MainActivity extends AppCompatActivity
         String user_mail = loginData.getString("email","aliaa08@twitter.com");
         String user_name = loginData.getString("user","Alia Bhatt");
 
+        //Test Codes...
+        Toast.makeText(getApplicationContext(),user_mail,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(),user_name,Toast.LENGTH_SHORT).show();
+
+
         //Set user values into Side nav...
-        user_name_view.setText(user_name);
-        user_mail_view.setText(user_mail);
+        //user_name_view.setText(user_name);
+        //user_mail_view.setText(user_mail);
 
 
         final EditText post_data = (EditText) findViewById(R.id.input_post);

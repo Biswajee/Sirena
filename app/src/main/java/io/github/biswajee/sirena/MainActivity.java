@@ -1,6 +1,7 @@
 package io.github.biswajee.sirena;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -22,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.Random;
@@ -38,6 +42,21 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.hideOverflowMenu();
         //setSupportActionBar(toolbar);
+
+
+        TextView user_name_view = (TextView)findViewById(R.id.user_name_view);
+        TextView user_mail_view = (TextView)findViewById(R.id.user_mail_view);
+
+        //Get data from shared preferences...
+        SharedPreferences loginData = getSharedPreferences("Login", MODE_PRIVATE);
+        String user_mail = loginData.getString("email","aliaa08@twitter.com");
+        String user_name = loginData.getString("user","Alia Bhatt");
+
+        //Set user values into Side nav...
+        user_name_view.setText(user_name);
+        user_mail_view.setText(user_mail);
+
+
         final EditText post_data = (EditText) findViewById(R.id.input_post);
         MenuItem profile_pic = (MenuItem) findViewById(R.id.menu_profile_pic);
         post_data.clearFocus();
@@ -170,15 +189,19 @@ public class MainActivity extends AppCompatActivity
         }
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
+        if(data != null) {
         if (requestCode == PICK_IMAGE) {
             Random r = new Random();
             int a = r.nextInt((100000-100)+1)+10;
+
             StorageReference storageRef = FirebaseStorage.getInstance().getReference(Integer.toString(a));
             Uri imageUri = data.getData();   //Intent.EXTRA_STREAM
-            storageRef.putFile(imageUri);
-
-
-            Toast.makeText(getApplicationContext(),"File Successfully Uploaded !",Toast.LENGTH_SHORT).show();
+                storageRef.putFile(imageUri);
+                Toast.makeText(getApplicationContext(), "File Successfully Uploaded !", Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(),"No file was selected !",Toast.LENGTH_SHORT).show();
+                return;
+            }
             }
             else{
             Toast.makeText(getApplicationContext(),"File Upload Failed !",Toast.LENGTH_SHORT).show();

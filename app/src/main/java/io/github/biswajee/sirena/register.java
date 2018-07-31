@@ -1,6 +1,7 @@
 package io.github.biswajee.sirena;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,7 +42,7 @@ public class register extends AppCompatActivity {
         final TextView password = (TextView)findViewById(R.id.input_password);
         final TextView pass_again = (TextView)findViewById(R.id.input_pass_verify);
         TextView signin = (TextView)findViewById(R.id.link_signin);
-
+        final SharedPreferences loginData = getSharedPreferences("Login", MODE_PRIVATE);
 
         reg_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +74,13 @@ public class register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Date currentTime = Calendar.getInstance().getTime();
+
+                            //Locally store login data...
+                            SharedPreferences.Editor loginInf= loginData.edit();
+                            loginInf.putString("email",email.getText().toString());
+                            loginInf.putString("password", password.getText().toString());
+                            loginInf.putString("user", name.getText().toString());
+
                             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                             DatabaseReference mChildRef = mRootRef.child("user-info").push();

@@ -1,6 +1,7 @@
 package io.github.biswajee.sirena;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -58,6 +59,13 @@ public class sign_worker extends AppCompatActivity {
                             Log.d("LOGIN STATUS:", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            //Store user data locally...
+                            SharedPreferences loginData = getSharedPreferences("Login", MODE_PRIVATE);
+                            SharedPreferences.Editor loginInf = loginData.edit();
+                            loginInf.putString("email",email.getText().toString());
+                            loginInf.putString("password", password.getText().toString());
+
                             Intent homeIntent = new Intent(sign_worker.this, MainActivity.class);
                             startActivity(homeIntent);
                             finish();

@@ -16,9 +16,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -213,7 +215,10 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), "Profile picture successfully uploaded", Toast.LENGTH_SHORT).show();
 
             //Download Avatar image from Firebase Storage to ImageView...
-            
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            View v = navigationView.getHeaderView(0);
+            ImageView avatar_pic_view = (ImageView)v.findViewById(R.id.profile_pic_view);
+            Glide.with(MainActivity.this).load(storageRef).into(avatar_pic_view);
 
 
             }else {

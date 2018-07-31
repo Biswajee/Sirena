@@ -65,6 +65,7 @@ public class sign_worker extends AppCompatActivity {
                             SharedPreferences.Editor loginInf = loginData.edit();
                             loginInf.putString("email",email.getText().toString());
                             loginInf.putString("password", password.getText().toString());
+                            loginInf.commit();
 
                             Intent homeIntent = new Intent(sign_worker.this, MainActivity.class);
                             startActivity(homeIntent);

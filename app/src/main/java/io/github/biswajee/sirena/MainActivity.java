@@ -43,9 +43,10 @@ public class MainActivity extends AppCompatActivity
         toolbar.hideOverflowMenu();
         //setSupportActionBar(toolbar);
 
-
-        TextView user_name_view = (TextView)findViewById(R.id.user_name_view);
-        TextView user_mail_view = (TextView)findViewById(R.id.user_mail_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View v = navigationView.getHeaderView(0);
+        TextView user_name_view = (TextView)v.findViewById(R.id.user_name_view);
+        TextView user_mail_view = (TextView)v.findViewById(R.id.user_mail_view);
 
         //Get data from shared preferences...
         SharedPreferences loginData = getSharedPreferences("Login", MODE_PRIVATE);
@@ -58,8 +59,8 @@ public class MainActivity extends AppCompatActivity
 
 
         //Set user values into Side nav...
-        //user_name_view.setText(user_name);
-        //user_mail_view.setText(user_mail);
+        user_name_view.setText(user_name);
+        user_mail_view.setText(user_mail);
 
 
         final EditText post_data = (EditText) findViewById(R.id.input_post);
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
 
 

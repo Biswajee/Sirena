@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -218,7 +219,9 @@ public class MainActivity extends AppCompatActivity
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             View v = navigationView.getHeaderView(0);
             ImageView avatar_pic_view = (ImageView)v.findViewById(R.id.profile_pic_view);
-            Glide.with(MainActivity.this).load(storageRef).into(avatar_pic_view);
+
+            Toast.makeText(getApplicationContext(),storageRef.toString(),Toast.LENGTH_SHORT).show();
+            Glide.with(getApplicationContext()).using(new FirebaseImageLoader()).load(storageRef).into(avatar_pic_view);
 
 
             }else {

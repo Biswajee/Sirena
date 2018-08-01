@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -21,14 +22,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
-import org.w3c.dom.Text;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 import java.util.Random;
@@ -199,39 +201,62 @@ public class MainActivity extends AppCompatActivity
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if(data != null) {
-        if (requestCode == PICK_IMAGE) {
-            Random r = new Random();
-            int a = r.nextInt((100000-100)+1)+10;
+            if (requestCode == PICK_IMAGE) {
+                Random r = new Random();
+                int a = r.nextInt((100000 - 100) + 1) + 10;
 
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference(Integer.toString(a));
+                final StorageReference storageRef = FirebaseStorage.getInstance().getReference(Integer.toString(a));
 
-            //Add image file name to Shared Pref...
-            SharedPreferences avatarData = getSharedPreferences("Avatar", MODE_PRIVATE);
-            SharedPreferences.Editor avatarInf= avatarData.edit();
-            avatarInf.putString("picture",Integer.toString(a));
-            avatarInf.commit();
+                //Add image file name to Shared Pref...
+                SharedPreferences avatarData = getSharedPreferences("Avatar", MODE_PRIVATE);
+                SharedPreferences.Editor avatarInf = avatarData.edit();
+                avatarInf.putString("picture", Integer.toString(a));
+                avatarInf.commit();
 
-            Uri imageUri = data.getData();   //Intent.EXTRA_STREAM
-            storageRef.putFile(imageUri);
-            Toast.makeText(getApplicationContext(), "Profile picture successfully uploaded", Toast.LENGTH_SHORT).show();
-
-            //Download Avatar image from Firebase Storage to ImageView...
-            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-            View v = navigationView.getHeaderView(0);
-            ImageView avatar_pic_view = (ImageView)v.findViewById(R.id.profile_pic_view);
-
-            Toast.makeText(getApplicationContext(),storageRef.toString(),Toast.LENGTH_SHORT).show();
-            Glide.with(getApplicationContext()).using(new FirebaseImageLoader()).load(storageRef).into(avatar_pic_view);
+                Uri imageUri = data.getData();   //Intent.EXTRA_STREAM
+                UploadTask avatarUploadTask = storageRef.putFile(imageUri);
 
 
-            }else {
-                Toast.makeText(getApplicationContext(),"No file was selected",Toast.LENGTH_SHORT).show();
+                Task<Uri> urlTask = avatarUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                    @Override
+                    public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                        if (!task.isSuccessful()) {
+                            throw task.getException();
+                        }
+
+                        // Continue with the task to get the download URL
+                        return storageRef.getDownloadUrl();
+                    }
+                }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+
+                            Toast.makeText(getApplicationContext(), "Profile picture successfully uploaded", Toast.LENGTH_SHORT).show();
+
+                            //Download Avatar image from Firebase Storage to ImageView...
+                            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                            View v = navigationView.getHeaderView(0);
+                            ImageView avatar_pic_view = (ImageView) v.findViewById(R.id.profile_pic_view);
+
+                            Toast.makeText(getApplicationContext(), downloadUri.toString(), Toast.LENGTH_SHORT).show();
+                            Glide.with(getApplicationContext()).load(downloadUri).into(avatar_pic_view);
+
+
+                        } else {
+                            // Handle failures
+                            Toast.makeText(getApplicationContext(), "No file was selected", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                });
+
+
+            } else {
+                Toast.makeText(getApplicationContext(), "File Upload Failed", Toast.LENGTH_SHORT).show();
                 return;
             }
-            }
-            else{
-            Toast.makeText(getApplicationContext(),"File Upload Failed",Toast.LENGTH_SHORT).show();
-            return;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

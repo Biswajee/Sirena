@@ -193,17 +193,21 @@ public class MainActivity extends AppCompatActivity
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-        } else if (id == R.id.nav_gallery) {
+        }
+        else if (id == R.id.nav_gallery) {
 
-                } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_slideshow) {
 
-                } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_manage) {
 
-                } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
 
-                } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_send) {
 
-                }
+        } else if (id == R.id.logout){
+            logout instance = new logout();
+            instance.onCreateDialog(0);
+        }
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);

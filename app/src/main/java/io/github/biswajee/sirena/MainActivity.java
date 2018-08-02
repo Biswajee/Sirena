@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
 
         if(!avatarFileURL.isEmpty()){
             ImageView avatar_pic_view = (ImageView) v.findViewById(R.id.profile_pic_view);
-            Glide.with(getApplicationContext()).load(avatarFileURL).into(avatar_pic_view);
+            Glide.with(getApplicationContext()).load(avatarFileURL).override(80,80).into(avatar_pic_view);
         }
 
         //Test Codes...

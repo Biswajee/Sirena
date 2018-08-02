@@ -1,5 +1,7 @@
 package io.github.biswajee.sirena;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -34,6 +36,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 import java.util.Random;
+
+import static android.app.AlertDialog.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -205,8 +209,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.logout){
-            logout instance = new logout();
-            instance.onCreateDialog(0);
+            Toast.makeText(getApplicationContext(),"You clicked logout", Toast.LENGTH_SHORT).show();
+            getSharedPreferences("Avatar", MODE_PRIVATE).edit().clear().commit();
+            getSharedPreferences("Login", MODE_PRIVATE).edit().clear().commit();
+            finish();
         }
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

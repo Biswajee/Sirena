@@ -6,4 +6,7 @@
     <string name="intro">SIRENA</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
+    <string name="confirmLogout">Are you sure you want to Logout ?</string>
+    <string name="confirm">YES</string>
+    <string name="notConfirm">CANCEL</string>
 </resources>

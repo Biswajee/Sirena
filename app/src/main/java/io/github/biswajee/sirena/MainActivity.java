@@ -58,6 +58,17 @@ public class MainActivity extends AppCompatActivity
         String user_mail = loginData.getString("email","aliaa08@twitter.com");
         String user_name = loginData.getString("user","Alia Bhatt");
 
+
+        //Get Avatar image details and call firebase storage in case avatar image file name is found
+        //Else do nothing...
+        SharedPreferences avatarData = getSharedPreferences("Avatar", MODE_PRIVATE);
+        String avatarFileURL = avatarData.getString("firebaseStorageURL","");
+
+        if(!avatarFileURL.isEmpty()){
+            ImageView avatar_pic_view = (ImageView) v.findViewById(R.id.profile_pic_view);
+            Glide.with(getApplicationContext()).load(avatarFileURL).into(avatar_pic_view);
+        }
+
         //Test Codes...
         //Toast.makeText(getApplicationContext(),user_mail,Toast.LENGTH_SHORT).show();
         //Toast.makeText(getApplicationContext(),user_name,Toast.LENGTH_SHORT).show();
@@ -207,20 +218,17 @@ public class MainActivity extends AppCompatActivity
 
                 final StorageReference storageRef = FirebaseStorage.getInstance().getReference(Integer.toString(a));
 
-                //Add image file name to Shared Pref...
-                SharedPreferences avatarData = getSharedPreferences("Avatar", MODE_PRIVATE);
-                SharedPreferences.Editor avatarInf = avatarData.edit();
-                avatarInf.putString("picture", Integer.toString(a));
-                avatarInf.commit();
+
 
                 Uri imageUri = data.getData();   //Intent.EXTRA_STREAM
                 UploadTask avatarUploadTask = storageRef.putFile(imageUri);
-
+                Toast.makeText(getApplicationContext(),"Uploading...", Toast.LENGTH_SHORT).show();
 
                 Task<Uri> urlTask = avatarUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                         if (!task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(),"Upload unsuccessful", Toast.LENGTH_SHORT).show();
                             throw task.getException();
                         }
 
@@ -240,7 +248,16 @@ public class MainActivity extends AppCompatActivity
                             View v = navigationView.getHeaderView(0);
                             ImageView avatar_pic_view = (ImageView) v.findViewById(R.id.profile_pic_view);
 
-                            Toast.makeText(getApplicationContext(), downloadUri.toString(), Toast.LENGTH_SHORT).show();
+                            //Test Code
+                            //Toast.makeText(getApplicationContext(), downloadUri.toString(), Toast.LENGTH_SHORT).show();
+
+                            //Add image download url to Shared Pref...
+                            SharedPreferences avatarData = getSharedPreferences("Avatar", MODE_PRIVATE);
+                            SharedPreferences.Editor avatarInf = avatarData.edit();
+                            avatarInf.putString("firebaseStorageURL",downloadUri.toString());
+                            avatarInf.commit();
+
+
                             Glide.with(getApplicationContext()).load(downloadUri).into(avatar_pic_view);
 
 

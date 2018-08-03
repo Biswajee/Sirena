@@ -176,11 +176,11 @@ public class MainActivity extends AppCompatActivity
         postRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                int i = 0;
                 Iterable<DataSnapshot> postText = dataSnapshot.getChildren();
                 for (DataSnapshot postSnap : postText) {
-                    int i = 0;
-                    Toast.makeText(getApplicationContext(),postSnap.child("post").toString(),Toast.LENGTH_LONG).show();
-                    postList[i++] = postSnap.child("post").toString();
+                    Toast.makeText(getApplicationContext(),postSnap.child("post").getValue().toString(),Toast.LENGTH_LONG).show();
+                    postList[i++] = postSnap.child("post").getValue().toString();
                 }
             }
 

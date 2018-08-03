@@ -16,7 +16,7 @@ import java.util.zip.Inflater;
 
 public class postAdapter extends RecyclerView.Adapter<postAdapter.postViewHolder> {
     @NonNull
-    private String[] data;
+    private String[] data = {"Hey There", "See you soon", "Hello wassup ?", "Bye", "See you soon", "Hello wassup ?", "Bye"};
 
     public postAdapter(String[] data){
         data = this.data;

@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAnalytics mFirebaseAnalytics;
     private String MENU_IMAGE = "profile_pic";
     private RecyclerView postRecycler;
-    private RecyclerView.Adapter postAdapter;
-    private RecyclerView.LayoutManager postLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,9 +168,8 @@ public class MainActivity extends AppCompatActivity
 
         //POPULATING LIST VIEW WITH POSTS...
         String[] postList = {"Hey There", "See you soon", "Hello wassup ?", "Bye"};
-        postLayoutManager = new LinearLayoutManager(this);
+        postRecycler.setLayoutManager(new LinearLayoutManager(this));
         postRecycler.setAdapter(new postAdapter(postList));
-
 
     }
 

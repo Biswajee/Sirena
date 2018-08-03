@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         String user_mail = loginData.getString("email","aliaa08@twitter.com");
         String user_name = loginData.getString("user","Alia Bhatt");
 
-        postRecycler = (RecyclerView) findViewById(R.id.postView);
+        postRecycler = (RecyclerView) findViewById(R.id.postRecycler);
 
 
         //Get Avatar image details and call firebase storage in case avatar image file name is found
@@ -169,7 +169,9 @@ public class MainActivity extends AppCompatActivity
 
 
         //POPULATING LIST VIEW WITH POSTS...
-
+        String[] postList = {"Hey There", "See you soon", "Hello wassup ?", "Bye"};
+        postLayoutManager = new LinearLayoutManager(this);
+        postRecycler.setAdapter(new postAdapter(postList));
 
 
     }

@@ -1,7 +1,5 @@
 package io.github.biswajee.sirena;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -20,10 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,16 +28,18 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Random;
-
-import static android.app.AlertDialog.*;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -167,7 +165,28 @@ public class MainActivity extends AppCompatActivity
 
 
         //POPULATING LIST VIEW WITH POSTS...
-        String[] postList = {"Hey There", "See you soon", "Hello wassup ?", "Bye"};
+        final String[] postList = {"Hey There", "See you soon", "Hello wassup ?", "Bye"};
+
+        //Use Firebase to populate data in postList Array...
+        FirebaseDatabase postDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference postRef = postDatabase.getReference("posts");
+
+
+        postRef.addValueEventListener(new ValueEventListener() {
+            int i = 0;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String text = dataSnapshot.getValue(HashMap.class).toString();
+                postList[i++] = text;
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
         postRecycler.setLayoutManager(new LinearLayoutManager(this));
         postRecycler.setAdapter(new postAdapter(postList));
 

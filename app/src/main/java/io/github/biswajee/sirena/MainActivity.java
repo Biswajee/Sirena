@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //POPULATING LIST VIEW WITH POSTS...
-        final String[] postList = {"Hey There", "See you soon", "Hello wassup ?", "Bye"};
+        final String[] postList = new String[256];
 
         //Use Firebase to populate data in postList Array...
         DatabaseReference postDatabase = FirebaseDatabase.getInstance().getReference();
@@ -174,14 +174,13 @@ public class MainActivity extends AppCompatActivity
 
 
         postRef.addValueEventListener(new ValueEventListener() {
-            int i = 0;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> postText = dataSnapshot.getChildren();
                 for (DataSnapshot postSnap : postText) {
-
-                    Toast.makeText(getApplicationContext(),postSnap.child("key").toString(),Toast.LENGTH_LONG).show();
-
+                    int i = 0;
+                    Toast.makeText(getApplicationContext(),postSnap.child("post").toString(),Toast.LENGTH_LONG).show();
+                    postList[i++] = postSnap.child("post").toString();
                 }
             }
 
@@ -194,7 +193,6 @@ public class MainActivity extends AppCompatActivity
 
         postRecycler.setLayoutManager(new LinearLayoutManager(this));
         postRecycler.setAdapter(new postAdapter(postList));
-
     }
 
 

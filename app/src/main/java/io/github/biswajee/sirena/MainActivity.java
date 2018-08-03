@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,8 +19,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,10 +46,16 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private FirebaseAnalytics mFirebaseAnalytics;
     private String MENU_IMAGE = "profile_pic";
+    private RecyclerView postRecycler;
+    private RecyclerView.Adapter postAdapter;
+    private RecyclerView.LayoutManager postLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //INITIALIZATION OF COMPONENTS BEGINS
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.hideOverflowMenu();
@@ -62,20 +71,33 @@ public class MainActivity extends AppCompatActivity
         String user_mail = loginData.getString("email","aliaa08@twitter.com");
         String user_name = loginData.getString("user","Alia Bhatt");
 
+        postRecycler = (RecyclerView) findViewById(R.id.postView);
+
 
         //Get Avatar image details and call firebase storage in case avatar image file name is found
         //Else do nothing...
         SharedPreferences avatarData = getSharedPreferences("Avatar", MODE_PRIVATE);
         String avatarFileURL = avatarData.getString("firebaseStorageURL","");
 
+        final EditText post_data = (EditText) findViewById(R.id.input_post);
+        MenuItem profile_pic = (MenuItem) findViewById(R.id.menu_profile_pic);
+
+
+        // ACCESS LOGGED IN USER'S ID (FIREBASE)
+        final register reg = new register();
+
+        //Firebase Analytics
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
+
+        //INITIALIZATION OF COMPONENTS ENDS
+
+
+
         if(!avatarFileURL.isEmpty()){
             ImageView avatar_pic_view = (ImageView) v.findViewById(R.id.profile_pic_view);
             Glide.with(getApplicationContext()).load(avatarFileURL).override(80,80).into(avatar_pic_view);
         }
-
-        //Test Codes...
-        //Toast.makeText(getApplicationContext(),user_mail,Toast.LENGTH_SHORT).show();
-        //Toast.makeText(getApplicationContext(),user_name,Toast.LENGTH_SHORT).show();
 
 
         //Set user values into Side nav...
@@ -83,14 +105,8 @@ public class MainActivity extends AppCompatActivity
         user_mail_view.setText(user_mail);
 
 
-        final EditText post_data = (EditText) findViewById(R.id.input_post);
-        MenuItem profile_pic = (MenuItem) findViewById(R.id.menu_profile_pic);
         post_data.clearFocus();
-        // ACCESS LOGGED IN USER'S ID (FIREBASE)
-        final register reg = new register();
 
-        //Firebase Analytics
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         //BOTTOM RIGHT FLOATING BUTTON ACTION
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -148,6 +164,16 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+
+
+
+        //POPULATING LIST VIEW WITH POSTS...
+        postRecycler.setHasFixedSize(true);
+        String[] myDataset = {"Apple", "Orange", "Banana"};
+        postAdapter = new postPopulateAdapter(myDataset);
+        postRecycler.setAdapter(postAdapter);
+
+
     }
 
 

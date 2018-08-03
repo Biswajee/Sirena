@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity
             int i = 0;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String text = dataSnapshot.getValue(HashMap.class).toString();
+                String text = dataSnapshot.getKey().toString();
                 postList[i++] = text;
             }
 

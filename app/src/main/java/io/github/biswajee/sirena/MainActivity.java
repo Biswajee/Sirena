@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -168,16 +169,20 @@ public class MainActivity extends AppCompatActivity
         final String[] postList = {"Hey There", "See you soon", "Hello wassup ?", "Bye"};
 
         //Use Firebase to populate data in postList Array...
-        FirebaseDatabase postDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference postRef = postDatabase.getReference("posts");
+        DatabaseReference postDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference postRef = postDatabase.child("posts");
 
 
         postRef.addValueEventListener(new ValueEventListener() {
             int i = 0;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String text = dataSnapshot.getKey().toString();
-                postList[i++] = text;
+                Iterable<DataSnapshot> postText = dataSnapshot.getChildren();
+                for (DataSnapshot postSnap : postText) {
+
+                    Toast.makeText(getApplicationContext(),postSnap.child("key").toString(),Toast.LENGTH_LONG).show();
+
+                }
             }
 
             @Override

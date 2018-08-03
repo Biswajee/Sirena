@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -168,10 +169,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //POPULATING LIST VIEW WITH POSTS...
-        postRecycler.setHasFixedSize(true);
-        String[] myDataset = {"Apple", "Orange", "Banana"};
-        postAdapter = new postPopulateAdapter(myDataset);
-        postRecycler.setAdapter(postAdapter);
+
 
 
     }

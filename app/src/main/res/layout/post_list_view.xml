@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:paddingRight="16dp"
         android:paddingLeft="10dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/person_round" />
 
     <TextView
         android:id="@+id/postData"

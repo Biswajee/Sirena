@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity
                 Iterable<DataSnapshot> postText = dataSnapshot.getChildren();
                 for (DataSnapshot postSnap : postText) {
                     //Toast.makeText(getApplicationContext(),postSnap.child("post").getValue().toString(),Toast.LENGTH_LONG).show();
-                    postList[i++] = postSnap.child("post").getValue().toString();
+                    postList[i++] = postSnap.child("sender").getValue().toString() + " : " + postSnap.child("post").getValue().toString();
                 }
             }
 
@@ -193,6 +193,8 @@ public class MainActivity extends AppCompatActivity
 
         postRecycler.setLayoutManager(new LinearLayoutManager(this));
         postRecycler.setAdapter(new postAdapter(postList));
+
+        //END LIST POPULATING...
     }
 
 

@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity
                 int i = 0;
                 Iterable<DataSnapshot> postText = dataSnapshot.getChildren();
                 for (DataSnapshot postSnap : postText) {
-                    Toast.makeText(getApplicationContext(),postSnap.child("sender").getValue().toString(),Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(),postSnap.child("sender").getValue().toString(),Toast.LENGTH_LONG).show();
                     postList[i++] = postSnap.child("sender").getValue().toString() + " : " + postSnap.child("post").getValue().toString();
 
                 }

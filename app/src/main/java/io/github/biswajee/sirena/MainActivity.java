@@ -64,13 +64,13 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View v = navigationView.getHeaderView(0);
-        TextView user_name_view = (TextView)v.findViewById(R.id.user_name_view);
+        final TextView user_name_view = (TextView)v.findViewById(R.id.user_name_view);
         TextView user_mail_view = (TextView)v.findViewById(R.id.user_mail_view);
 
         //Get data from shared preferences...
         SharedPreferences loginData = getSharedPreferences("Login", MODE_PRIVATE);
         final String user_mail = loginData.getString("email","aliaa08@twitter.com");
-        final String[] user_name = {loginData.getString("user", "Alia Bhatt")};
+        final String user_name = loginData.getString("user", "Alia Bhatt");
 
         // Get name from Firebase database after successful login...
 
@@ -80,9 +80,9 @@ public class MainActivity extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> userInfoName = dataSnapshot.getChildren();
                 for(DataSnapshot nameAssigner : userInfoName){
-                    Toast.makeText(getApplicationContext(),nameAssigner.toString(),Toast.LENGTH_SHORT).show();
-                    if (nameAssigner.child("email").getValue().toString().equals(user_mail)){
-                        user_name[0] = nameAssigner.child("name").getValue().toString();
+                    Toast.makeText(getApplicationContext(),nameAssigner.child("email").getValue().toString(),Toast.LENGTH_SHORT).show();
+                    if (nameAssigner.child("email").getValue().toString().equalsIgnoreCase(user_mail)){
+                        user_name_view.setText(nameAssigner.child("name").getValue().toString());
                     }
                 }
             }
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //Set user values into Side nav...
-        user_name_view.setText(user_name[0]);
+        user_name_view.setText(user_name);
         user_mail_view.setText(user_mail);
 
 

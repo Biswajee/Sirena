@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> userInfoName = dataSnapshot.getChildren();
                 for(DataSnapshot nameAssigner : userInfoName){
-                    Toast.makeText(getApplicationContext(),nameAssigner.child("email").getValue().toString(),Toast.LENGTH_SHORT).show();
                     if (nameAssigner.child("email").getValue().toString().equalsIgnoreCase(user_mail)){
                         user_name_view.setText(nameAssigner.child("name").getValue().toString());
                     }

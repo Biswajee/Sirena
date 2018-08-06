@@ -173,6 +173,7 @@ public class MainActivity extends AppCompatActivity
                     DatabaseReference post_id = mRootRef.child("posts").push();
                     post_id.child("post").setValue(post_data.getText().toString());
                     post_id.child("sender").setValue(reg.uid);
+                    System.out.println(reg.uid);
                     post_id.child("post_date").setValue(Calendar.getInstance().getTime().toString());
                     post_data.setText("");
                     post_data.clearFocus();
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity
                 int i = 0;
                 Iterable<DataSnapshot> postText = dataSnapshot.getChildren();
                 for (DataSnapshot postSnap : postText) {
-                    //Toast.makeText(getApplicationContext(),postSnap.child("post").getValue().toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),postSnap.child("sender").getValue().toString(),Toast.LENGTH_LONG).show();
                     postList[i++] = postSnap.child("sender").getValue().toString() + " : " + postSnap.child("post").getValue().toString();
 
                 }

@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity
 
         // ACCESS LOGGED IN USER'S ID (FIREBASE)
         final register reg = new register();
+        final sign_worker loginUID = new sign_worker();
 
         //Firebase Analytics
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -171,9 +172,12 @@ public class MainActivity extends AppCompatActivity
                 } else if (!post_data.getText().toString().isEmpty()) {
                     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                     DatabaseReference post_id = mRootRef.child("posts").push();
+                    post_id.child("sender").setValue(reg.uid);
+                    if (reg.uid.equals("unknown-user")) {
+                        post_id.child("sender").setValue(loginUID.uid);
+                        Toast.makeText(getApplicationContext(), loginUID.uid, Toast.LENGTH_SHORT).show();
+                    }
                     post_id.child("post").setValue(post_data.getText().toString());
-
-                    System.out.println(reg.uid);
                     post_id.child("post_date").setValue(Calendar.getInstance().getTime().toString());
                     post_data.setText("");
                     post_data.clearFocus();
@@ -202,9 +206,14 @@ public class MainActivity extends AppCompatActivity
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 int i = 0;
                 Iterable<DataSnapshot> postText = dataSnapshot.getChildren();
+
                 for (DataSnapshot postSnap : postText) {
                     //Toast.makeText(getApplicationContext(),postSnap.child("sender").getValue().toString(),Toast.LENGTH_LONG).show();
-                    postList[i++] = postSnap.child("sender").getValue().toString() + " : " + postSnap.child("post").getValue().toString();
+                    try {
+                        postList[i++] = postSnap.child("sender").getValue().toString() + " : " + postSnap.child("post").getValue().toString();
+                    } catch (NullPointerException e) {
+                        Toast.makeText(getApplicationContext(), "You are a great BUG", Toast.LENGTH_LONG).show();
+                    }
 
                 }
             }

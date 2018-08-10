@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity
                     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
                     DatabaseReference post_id = mRootRef.child("posts").push();
                     post_id.child("post").setValue(post_data.getText().toString());
-                    post_id.child("sender").setValue(reg.uid);
+
                     System.out.println(reg.uid);
                     post_id.child("post_date").setValue(Calendar.getInstance().getTime().toString());
                     post_data.setText("");

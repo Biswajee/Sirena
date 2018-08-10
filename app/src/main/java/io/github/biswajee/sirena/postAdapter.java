@@ -37,10 +37,12 @@ public class postAdapter extends RecyclerView.Adapter<postAdapter.postViewHolder
 
     }
 
+
     @Override
     public int getItemCount() {
         return data.length;
     }
+
 
     public class postViewHolder extends RecyclerView.ViewHolder{
         ImageView postMakerImage;

@@ -359,6 +359,7 @@ public class MainActivity extends AppCompatActivity
                             SharedPreferences.Editor avatarInf = avatarData.edit();
                             avatarInf.putString("firebaseStorageURL",downloadUri.toString());
                             avatarInf.commit();
+                            DatabaseReference userAvatarInfoRef = FirebaseDatabase.getInstance().getReference("user-info");
 
 
                             Glide.with(getApplicationContext()).load(downloadUri).into(avatar_pic_view);

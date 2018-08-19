@@ -10,7 +10,7 @@
             android:title="Update profile picture" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/friendfinder"
             android:title="Share from Gallery" />
         <item
             android:id="@+id/nav_slideshow"

@@ -10,12 +10,12 @@
             android:title="Update profile picture" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/friendfinder"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="Share from Gallery" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Upload a video" />
+            android:icon="@drawable/friendfinder"
+            android:title="Find friends" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"

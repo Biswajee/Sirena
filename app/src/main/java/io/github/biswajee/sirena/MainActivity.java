@@ -281,7 +281,9 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_friends) {
+            Intent friendSearch = new Intent(MainActivity.this, friendFinder.class);
+            startActivity(friendSearch);
 
         } else if (id == R.id.nav_manage) {
 

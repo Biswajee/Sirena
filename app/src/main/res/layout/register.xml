@@ -12,11 +12,12 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageView android:src="@drawable/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
+        <ImageView android:src="@mipmap/ic_launcher"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
+
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -27,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:hint="Full Name" />
+                android:hint="Full name" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- Email Label -->
@@ -65,26 +66,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password Again"/>
+                android:hint="Password again"/>
         </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="60dp"
+        android:orientation="horizontal">
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_reg"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginRight="15dp"
             android:padding="12dp"
             android:text="Sign Up"/>
 
-        <TextView android:id="@+id/link_signin"
-            android:layout_width="fill_parent"
+        <android.support.v7.widget.AppCompatButton android:id="@+id/link_signin"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:text="Already have an account ? Click Here"
+            android:layout_marginLeft="15dp"
+            android:text="Login"
             android:linksClickable="true"
-            android:gravity="center"
-            android:textSize="16dip"/>
-
+            android:gravity="center"/>
+    </LinearLayout>
     </LinearLayout>
 </ScrollView>

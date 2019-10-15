@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity
 
         //Get data from shared preferences...
         SharedPreferences loginData = getSharedPreferences("Login", MODE_PRIVATE);
-        final String user_mail = loginData.getString("email","aliaa08@twitter.com");
-        final String user_name = loginData.getString("user", "Alia Bhatt");
+        final String user_mail = loginData.getString("email","default@rose.app");
+        final String user_name = loginData.getString("user", "John Doe");
 
         // Get name from Firebase database after successful login...
 
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity
                 Glide.with(MainActivity.this).load(R.drawable.sent).into(msg_sent);
                 */
                 if (post_data.getText().toString().isEmpty()) {
-                    Snackbar.make(v, "Nothing to post ! Please write something", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Nothing to post ! Please type something", Snackbar.LENGTH_SHORT).show();
                     return;
                 } else if (!post_data.getText().toString().isEmpty()) {
                     DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity
                     Snackbar.make(v, "Your post is published now !", Snackbar.LENGTH_SHORT).show();
                     return;
                 } else {
-                    Snackbar.make(v, "There is some connectivity issue. Verify internet connection.", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Verify internet connection and try.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            startActivityForResult(Intent.createChooser(intent, "Choose avatar"), PICK_IMAGE);
         }
         else if (id == R.id.nav_gallery) {
 
@@ -298,7 +298,7 @@ public class MainActivity extends AppCompatActivity
             logoutBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getApplicationContext(),"You clicked logout", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Logged out", Toast.LENGTH_SHORT).show();
                     getSharedPreferences("Avatar", MODE_PRIVATE).edit().clear().commit();
                     getSharedPreferences("Login", MODE_PRIVATE).edit().clear().commit();
                     FirebaseAuth.getInstance().signOut();
@@ -314,6 +314,7 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
             return true;
         }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if(data != null) {

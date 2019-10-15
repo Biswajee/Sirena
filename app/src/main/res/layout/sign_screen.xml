@@ -12,9 +12,9 @@
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
 
-        <ImageView android:src="@drawable/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
+        <ImageView android:src="@mipmap/ic_launcher"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
 
@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
+                android:focusedByDefault="false"
                 android:hint="Email" />
         </android.support.design.widget.TextInputLayout>
 
@@ -40,27 +41,38 @@
             <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusedByDefault="false"
                 android:inputType="textPassword"
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:layout_marginRight="25dp"
             android:layout_marginBottom="24dp"
-            android:padding="12dp"
+            android:padding="5dp"
             android:text="Login"/>
 
-        <TextView android:id="@+id/link_signup"
-            android:layout_width="fill_parent"
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/link_signup"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="25dp"
             android:layout_marginBottom="24dp"
-            android:text="Don't have an account ? Create one"
+            android:padding="5dp"
+            android:text="Sign up"
             android:linksClickable="true"
-            android:gravity="center"
             android:textSize="16dip"/>
-
+    </LinearLayout>
     </LinearLayout>
 </ScrollView>

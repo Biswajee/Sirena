@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/splash_image"
-        android:background="@drawable/splash_bg" />
+        android:background="@drawable/splash" />
 
     <TextView
         android:id="@+id/myImageViewText"
@@ -16,11 +16,11 @@
         android:layout_alignTop="@id/splash_image"
         android:layout_alignRight="@id/splash_image"
         android:layout_alignBottom="@id/splash_image"
-        android:layout_margin="1dp"
-        android:gravity="center"
+        android:layout_margin="100dp"
+        android:gravity="top|center"
         android:text="@string/intro"
         android:fontFamily="serif-monospace"
         android:textSize="70sp"
-        android:textColor="#fff" />
+        android:textColor="#fc3103" />
 
 </RelativeLayout>

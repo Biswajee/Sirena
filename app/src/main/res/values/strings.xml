@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Sirena</string>
+    <string name="app_name">ROSÉ</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="intro">ROSÉ</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
-    <string name="confirmLogout">Are you sure you want to Logout ?</string>
+    <string name="confirmLogout">Do you wish to logout ?</string>
     <string name="confirm">YES</string>
     <string name="notConfirm">CANCEL</string>
 </resources>

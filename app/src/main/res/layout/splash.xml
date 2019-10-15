@@ -16,7 +16,7 @@
         android:layout_alignTop="@id/splash_image"
         android:layout_alignRight="@id/splash_image"
         android:layout_alignBottom="@id/splash_image"
-        android:layout_margin="100dp"
+        android:layout_margin="80dp"
         android:gravity="top|center"
         android:text="@string/intro"
         android:fontFamily="serif-monospace"
